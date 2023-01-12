@@ -15,8 +15,10 @@ import AddFilterCollabWrapper from "./components/AddFilterCollabWrapper";
 import AddCollab from "./components/AddCollab";
 import FilterCollab from "./components/FilterCollab";
 import CollabList from "./components/CollabList";
+import Modal from "./components/Modal";
 
 import { validateInputs } from "./Utils";
+import Footer from "./components/Footer";
 
 export const AddCollabContext = createContext(null);
 export const FilterCollabContext = createContext(null);
@@ -61,6 +63,9 @@ function App() {
   const [selectedEntry, setSelectedEntry] = useState(-1);
 
   const [shouldUpdatePopper, setShouldUpdatePopper] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalTarget, setModalTarget] = useState(null);
 
   // During first time load, update the collaborator objects with an unique id.
   useEffect(() => {
@@ -141,42 +146,98 @@ function App() {
     setSelectedEntry(-1);
   };
 
+  const updateCollab = (target, updateInfo) => {
+    const { valid, faultyInputs } = validateInputs(
+      [
+        { name: "Nombre", value: updateInfo.name },
+        { name: "Rol", value: updateInfo.role },
+        { name: "Email", value: updateInfo.email, email: true, id: target.id },
+      ],
+      collabs,
+      true
+    );
+
+    if (valid) {
+      setCollabs(
+        collabs.map((collab) =>
+          collab.id === target.id ? { ...collab, ...updateInfo } : collab
+        )
+      );
+      setShouldUpdatePopper(true);
+      setSelectedEntry(-1);
+
+      return true;
+    } else {
+      alert(faultyInputs[0].reason);
+
+      return false;
+    }
+  };
+
+  const setUpModal = (id) => {
+    const target = collabs.find((collab) => collab.id === id);
+
+    if (target) {
+      setModalTarget(target);
+      setShowModal(true);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center bg-gray-800 text-white min-h-screen">
-      <AddFilterCollabWrapper>
-        <AddCollabContext.Provider
-          value={{ newCollab, dispatch, addNewCollab }}
-        >
-          <AddCollab />
-        </AddCollabContext.Provider>
-        <FilterCollabContext.Provider
+    <>
+      <div className="flex flex-col items-center bg-gray-800 text-white min-h-screen">
+        <AddFilterCollabWrapper>
+          <AddCollabContext.Provider
+            value={{ newCollab, dispatch, addNewCollab }}
+          >
+            <AddCollab />
+          </AddCollabContext.Provider>
+          <FilterCollabContext.Provider
+            value={{
+              filter,
+              setFilter,
+              filterMode,
+              setFilterMode,
+              setFilteredCollabs,
+              filterCollabs,
+              setSelectedEntry,
+              setShouldUpdatePopper,
+            }}
+          >
+            <FilterCollab />
+          </FilterCollabContext.Provider>
+        </AddFilterCollabWrapper>
+
+        <CollabListContext.Provider
           value={{
-            filter,
-            setFilter,
-            filterMode,
-            setFilterMode,
-            setFilteredCollabs,
-            filterCollabs,
-            setSelectedEntry,
+            shouldUpdatePopper,
             setShouldUpdatePopper,
+            filteredCollabs,
+            setUpModal,
           }}
         >
-          <FilterCollab />
-        </FilterCollabContext.Provider>
-      </AddFilterCollabWrapper>
+          <CollabList
+            list={collabs}
+            filteredList={filteredCollabs}
+            selected={selectedEntry}
+            setSelected={setSelectedEntry}
+            deleteCollab={deleteCollab}
+          />
+        </CollabListContext.Provider>
+        <Footer />
+      </div>
 
-      <CollabListContext.Provider
-        value={{ shouldUpdatePopper, setShouldUpdatePopper, filteredCollabs }}
-      >
-        <CollabList
-          list={collabs}
-          filteredList={filteredCollabs}
-          selected={selectedEntry}
-          setSelected={setSelectedEntry}
-          deleteCollab={deleteCollab}
+      {showModal ? (
+        <Modal
+          title="Editar colaborador"
+          desc="Edite los campos que desee modificar"
+          showModal={showModal}
+          setShowModal={setShowModal}
+          toModify={modalTarget}
+          saveFunc={updateCollab}
         />
-      </CollabListContext.Provider>
-    </div>
+      ) : null}
+    </>
   );
 }
 

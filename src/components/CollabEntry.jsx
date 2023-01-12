@@ -5,6 +5,7 @@ import Button from "./Buttons/Button";
 import DeleteCollabButton from "./Buttons/DeleteCollabButton";
 
 import { CollabListContext } from "../App";
+import ModifyCollabButton from "./Buttons/ModifyCollabButton";
 
 const CollabEntry = ({
   idx,
@@ -35,8 +36,12 @@ const CollabEntry = ({
     }
   );
 
-  const { shouldUpdatePopper, setShouldUpdatePopper, filteredCollabs } =
-    useContext(CollabListContext);
+  const {
+    shouldUpdatePopper,
+    setShouldUpdatePopper,
+    filteredCollabs,
+    setUpModal,
+  } = useContext(CollabListContext);
 
   useEffect(() => {
     if (shouldUpdatePopper) {
@@ -94,7 +99,7 @@ const CollabEntry = ({
         style={styles.popper}
         {...attributes.popper}
       >
-        <Button text="Editar" />
+        <ModifyCollabButton clickAction={setUpModal} idToModify={id} />
         <DeleteCollabButton clickAction={deleteCollab} idToDelete={id} />
       </div>
     </li>
