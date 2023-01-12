@@ -91,6 +91,7 @@ function App() {
 
     if (valid) {
       setCollabs([...collabs, { ...newCollab, id: uuidv4() }]);
+      setShouldUpdatePopper(true);
       dispatch({ type: "RESET" });
     } else {
       alert(faultyInputs[0].reason);
