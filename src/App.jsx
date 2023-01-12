@@ -10,9 +10,9 @@ import AddCollab from "./components/AddCollab";
 import FilterCollab from "./components/FilterCollab";
 import CollabList from "./components/CollabList";
 import Modal from "./components/Modal";
+import Footer from "./components/Footer";
 
 import { validateInputs } from "./Utils";
-import Footer from "./components/Footer";
 
 export const AddCollabContext = createContext(null);
 export const FilterCollabContext = createContext(null);
