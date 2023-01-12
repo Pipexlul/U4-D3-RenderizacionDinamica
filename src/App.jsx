@@ -19,6 +19,7 @@ export const FilterCollabContext = createContext(null);
 export const CollabListContext = createContext(null);
 
 function App() {
+  // Returns a new array to avoid errors with comparing the reference of the two identical arrays
   const initialAddCollabState = () => {
     return {
       name: "",
@@ -27,6 +28,9 @@ function App() {
     };
   };
 
+  // useReducer is definitely not necessary here
+  // the prop drilling it saves is not worth the complexity
+  // but I wanted to learn and apply the concept
   const newCollabReducerFn = (state, action) => {
     switch (action.type) {
       case "NAME":
@@ -54,6 +58,7 @@ function App() {
   const [filter, setFilter] = useState("");
   const [filterMode, setFilterMode] = useState(0);
 
+  // Indicates which collaborator entry is selected. -1 means no entry is selected.
   const [selectedEntry, setSelectedEntry] = useState(-1);
 
   const [shouldUpdatePopper, setShouldUpdatePopper] = useState(false);
@@ -61,7 +66,9 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [modalTarget, setModalTarget] = useState(null);
 
-  // During first time load, update the collaborator objects with an unique id.
+  // During first time load, update the collaborator objects with an unique id
+  // This is because the initial data is loaded from a .json file so it had to be static (1, 2, 3, etc..)
+  // We apply new ids to the initial data and only run this function once
   useEffect(() => {
     const updatedCollabs = [];
 
@@ -72,6 +79,8 @@ function App() {
     setCollabs(updatedCollabs);
   }, []);
 
+  // If CollabList is displaying a filtered list, and there has been a change in the real collabs array (addition or deletion)
+  // Then force a new filter
   useEffect(() => {
     if (filteredCollabs !== null) {
       filterCollabs();
@@ -140,6 +149,9 @@ function App() {
     setSelectedEntry(-1);
   };
 
+  // We pass true as the third argument to validateInputs to indicate that
+  // In the event of a the user trying to update an entry with the same email
+  // It will not trigger an error. But it will if the email already exists in another entry
   const updateCollab = (target, updateInfo) => {
     const { valid, faultyInputs } = validateInputs(
       [
@@ -177,6 +189,8 @@ function App() {
     }
   };
 
+  // Again, the use of useReducer and useContext might have been a bit too overkill
+  // for this project, but I really gained a lot of knowledge so it's worth it in my eyes
   return (
     <>
       <div className="flex flex-col items-center bg-gray-800 text-white min-h-screen">

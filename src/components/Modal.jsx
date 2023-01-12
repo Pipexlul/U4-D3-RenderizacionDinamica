@@ -15,6 +15,7 @@ const Modal = ({
   const [modifyRole, setModifyRole] = useState(toModify.role);
   const [modifyEmail, setModifyEmail] = useState(toModify.email);
 
+  // These useEffects are here to prevent data mismatching if the target entry changes
   useEffect(() => {
     if (toModify.name !== modifyName) {
       setModifyName(toModify.name);
@@ -101,6 +102,7 @@ const Modal = ({
                         email: modifyEmail,
                       })
                     ) {
+                      // We only close the modal after a successful edit
                       setShowModal(false);
                     }
                   }

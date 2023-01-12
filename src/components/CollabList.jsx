@@ -20,6 +20,8 @@ const CollabList = ({
       <ul className="flex flex-col">
         {(filteredList === null ? list : filteredList).map(
           ({ name, id, role, email }, index) => {
+            // Index is used to know what entry has been selected
+            // For everything else (check what entry to edit/remove), we use id
             return (
               <CollabEntry
                 idx={index}

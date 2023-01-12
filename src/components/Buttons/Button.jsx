@@ -1,5 +1,3 @@
-import React from "react";
-
 const Button = ({ text, isSubmit = false, clickAction, actionArgs }) => {
   return (
     <button

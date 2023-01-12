@@ -43,6 +43,7 @@ const CollabEntry = ({
     setUpModal,
   } = useContext(CollabListContext);
 
+  // Force a popper update (so popup modification/deletion menu correctly adjusts to the new entry position)
   useEffect(() => {
     if (shouldUpdatePopper) {
       if (update) {
