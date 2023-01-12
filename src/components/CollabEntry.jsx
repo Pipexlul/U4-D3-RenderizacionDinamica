@@ -54,12 +54,17 @@ const CollabEntry = ({
     >
       <div
         ref={setReferenceElement}
-        className="transition duration-500 shadow shadow-lime-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4"
+        className={`transition duration-500 shadow shadow-lime-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer rounded-md flex flex-1 items-center p-4 ${
+          selected == idx ? "bg-green-300" : "bg-white"
+        }`}
         onClick={(e) => {
           if (selected == idx) {
             setSelected(-1);
           } else {
             setSelected(idx);
+            if (update) {
+              update();
+            }
           }
         }}
       >
