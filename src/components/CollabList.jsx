@@ -1,6 +1,12 @@
 import CollabEntry from "./CollabEntry";
 
-const CollabList = ({ list, filteredList }) => {
+const CollabList = ({
+  list,
+  filteredList,
+  selected,
+  setSelected,
+  deleteCollab,
+}) => {
   return (
     <div className="flex flex-col items-center justify-center max-w-xl p-6">
       <div className="w-full px-4 py-5 mb-2 bg-white border rounded-md shadow sm:px-6">
@@ -13,14 +19,18 @@ const CollabList = ({ list, filteredList }) => {
       </div>
       <ul className="flex flex-col">
         {(filteredList === null ? list : filteredList).map(
-          ({ name, id, role, email }) => {
+          ({ name, id, role, email }, index) => {
             return (
               <CollabEntry
+                idx={index}
                 key={id}
                 id={id}
                 name={name}
                 role={role}
                 email={email}
+                selected={selected}
+                setSelected={setSelected}
+                deleteCollab={deleteCollab}
               />
             );
           }

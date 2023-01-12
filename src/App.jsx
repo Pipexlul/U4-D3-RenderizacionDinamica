@@ -20,6 +20,7 @@ import { validateInputs } from "./Utils";
 
 export const AddCollabContext = createContext(null);
 export const FilterCollabContext = createContext(null);
+export const CollabListContext = createContext(null);
 
 function App() {
   const initialAddCollabState = () => {
@@ -56,6 +57,10 @@ function App() {
 
   const [filter, setFilter] = useState("");
   const [filterMode, setFilterMode] = useState(0);
+
+  const [selectedEntry, setSelectedEntry] = useState(-1);
+
+  const [shouldUpdatePopper, setShouldUpdatePopper] = useState(false);
 
   // During first time load, update the collaborator objects with an unique id.
   useEffect(() => {
@@ -120,6 +125,12 @@ function App() {
     }
   };
 
+  const deleteCollab = (id) => {
+    setCollabs(collabs.filter((collab) => collab.id !== id));
+    setShouldUpdatePopper(true);
+    setSelectedEntry(-1);
+  };
+
   return (
     <div className="flex flex-col items-center bg-gray-800 text-white min-h-screen">
       <AddFilterCollabWrapper>
@@ -142,7 +153,17 @@ function App() {
         </FilterCollabContext.Provider>
       </AddFilterCollabWrapper>
 
-      <CollabList list={collabs} filteredList={filteredCollabs} />
+      <CollabListContext.Provider
+        value={{ shouldUpdatePopper, setShouldUpdatePopper }}
+      >
+        <CollabList
+          list={collabs}
+          filteredList={filteredCollabs}
+          selected={selectedEntry}
+          setSelected={setSelectedEntry}
+          deleteCollab={deleteCollab}
+        />
+      </CollabListContext.Provider>
     </div>
   );
 }
