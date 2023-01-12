@@ -38,3 +38,11 @@ export const validateInputs = (inputs, colList, isUpdate = false) => {
     };
   }
 };
+
+export const alertFaultyValues = (faultyValues) => {
+  const message = faultyValues.reduce((prev, cur) => {
+    return (prev += `${cur.name}: ${cur.reason}\n`);
+  }, "");
+
+  alert(message);
+};

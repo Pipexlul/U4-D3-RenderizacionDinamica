@@ -12,7 +12,7 @@ import CollabList from "./components/CollabList";
 import Modal from "./components/Modal";
 import Footer from "./components/Footer";
 
-import { validateInputs } from "./Utils";
+import { validateInputs, alertFaultyValues } from "./Utils";
 
 export const AddCollabContext = createContext(null);
 export const FilterCollabContext = createContext(null);
@@ -102,7 +102,7 @@ function App() {
       setShouldUpdatePopper(true);
       dispatch({ type: "RESET" });
     } else {
-      alert(faultyInputs[0].reason);
+      alertFaultyValues(faultyInputs);
     }
   };
 
@@ -174,7 +174,7 @@ function App() {
 
       return true;
     } else {
-      alert(faultyInputs[0].reason);
+      alertFaultyValues(faultyInputs);
 
       return false;
     }
