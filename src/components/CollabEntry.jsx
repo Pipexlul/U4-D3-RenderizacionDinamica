@@ -35,7 +35,7 @@ const CollabEntry = ({
     }
   );
 
-  const { shouldUpdatePopper, setShouldUpdatePopper } =
+  const { shouldUpdatePopper, setShouldUpdatePopper, filteredCollabs } =
     useContext(CollabListContext);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const CollabEntry = ({
       }
       setShouldUpdatePopper(false);
     }
-  }, [shouldUpdatePopper, setShouldUpdatePopper]);
+  }, [shouldUpdatePopper, setShouldUpdatePopper, filteredCollabs]);
 
   return (
     <li

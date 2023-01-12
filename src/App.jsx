@@ -100,6 +100,7 @@ function App() {
   const filterCollabs = () => {
     const filterCheck = filter.toLowerCase();
 
+    let success = true;
     switch (filterMode) {
       case 0: // Filter by name
         setFilteredCollabs(
@@ -122,6 +123,14 @@ function App() {
           )
         );
         break;
+      default:
+        success = false;
+        break;
+    }
+
+    if (success) {
+      setShouldUpdatePopper(true);
+      setSelectedEntry(-1);
     }
   };
 
@@ -147,6 +156,8 @@ function App() {
             setFilterMode,
             setFilteredCollabs,
             filterCollabs,
+            setSelectedEntry,
+            setShouldUpdatePopper,
           }}
         >
           <FilterCollab />
@@ -154,7 +165,7 @@ function App() {
       </AddFilterCollabWrapper>
 
       <CollabListContext.Provider
-        value={{ shouldUpdatePopper, setShouldUpdatePopper }}
+        value={{ shouldUpdatePopper, setShouldUpdatePopper, filteredCollabs }}
       >
         <CollabList
           list={collabs}

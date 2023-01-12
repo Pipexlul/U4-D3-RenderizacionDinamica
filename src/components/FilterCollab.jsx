@@ -17,6 +17,8 @@ const FilterCollab = () => {
     setFilterMode,
     setFilteredCollabs,
     filterCollabs,
+    setSelectedEntry,
+    setShouldUpdatePopper,
   } = useContext(FilterCollabContext);
 
   return (
@@ -48,6 +50,8 @@ const FilterCollab = () => {
             clearAction={() => {
               setFilteredCollabs(null);
               setFilter("");
+              setShouldUpdatePopper(true);
+              setSelectedEntry(-1);
             }}
           />
         </div>
