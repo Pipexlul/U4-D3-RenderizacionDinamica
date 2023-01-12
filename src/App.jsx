@@ -21,6 +21,14 @@ function App() {
             />
           </div>
           <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">Rol:</label>
+            <input
+              className="w-full border border-gray-400 p-2 rounded-lg"
+              type="text"
+              name="role"
+            />
+          </div>
+          <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">
               Email:
             </label>
