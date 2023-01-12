@@ -2,21 +2,21 @@
   "baseCollabs": [
     {
       "id": "1",
-      "name": "Colaborador 1",
+      "name": "Juanito Perez",
       "role": "Desarrollador Back-end",
-      "email": "colaborador1@colaborador1.com"
+      "email": "JuanitoElPro@gmail.com"
     },
     {
       "id": "2",
-      "name": "Colaborador 2",
+      "name": "Gonzalo Gonzalez",
       "role": "Desarrollador Front-end",
-      "email": "colaborador2@colaborador2.com"
+      "email": "gonzaDev@gmail.com"
     },
     {
       "id": "3",
-      "name": "Colaborador 3",
+      "name": "Ana Amari",
       "role": "DevOps",
-      "email": "colaborador3@colaborador3.com"
+      "email": "aamari@gmail.com"
     }
   ]
 }
