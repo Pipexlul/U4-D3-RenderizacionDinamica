@@ -11,13 +11,13 @@ import CollabList from "./components/CollabList";
 
 function App() {
   return (
-    <div className="bg-gray-800 text-white min-h-screen">
+    <div className="flex flex-col items-center bg-gray-800 text-white min-h-screen">
       <AddFilterCollabWrapper>
         <AddCollab />
         <FilterCollab />
       </AddFilterCollabWrapper>
 
-      <CollabList />
+      <CollabList list={baseCollabs} />
     </div>
   );
 }
