@@ -3,16 +3,19 @@
     {
       "id": "1",
       "name": "Colaborador 1",
+      "role": "Desarrollador Back-end",
       "email": "colaborador1@colaborador1.com"
     },
     {
       "id": "2",
       "name": "Colaborador 2",
+      "role": "Desarrollador Front-end",
       "email": "colaborador2@colaborador2.com"
     },
     {
       "id": "3",
       "name": "Colaborador 3",
+      "role": "DevOps",
       "email": "colaborador3@colaborador3.com"
     }
   ]
